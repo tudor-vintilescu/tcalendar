@@ -1,0 +1,85 @@
+
+div.tcalendar {
+    display: inline-block;
+}
+
+div.tcalendar table.tcalendar {
+
+}
+
+div.tcalendar div.tcalendar-header {
+    text-align: center;
+}
+
+div.tcalendar-header .date-part {
+    display: inline-block;
+    padding: 7px 10px;
+
+    background-color: #EAEAEA;
+    border-radius: 5px;
+
+    color: #202020;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+
+div.tcalendar-header .date-part.arrow {
+
+    background-color: transparent;
+    cursor: pointer;
+
+    padding-top: 3px;
+
+    color: #505050;
+
+}
+
+div.tcalendar-header .date-part.arrow:hover {
+    color: #909090;
+}
+
+
+table.tcalendar th {
+    font-weight: 300;
+}
+
+table.tcalendar th, td {
+    text-align: center;
+
+    padding: 5px;
+}
+
+table.tcalendar td {
+    text-align: center;
+
+    font-size: 14px;
+    /*padding: 1.6em;*/
+
+    padding: 0;
+
+    border: 1px solid #808080;
+}
+
+table.tcalendar td.selected a {
+    background-color: lightblue;
+    color: #202020;
+}
+
+table.tcalendar td a {
+
+    display: block;
+
+    padding: 3px;
+
+    height: 60px;
+    width: 60px;
+
+    text-align: right;
+    text-decoration: none;
+
+}
+
+table.tcalendar td a.not-in-month {
+    color: #808080;
+}

@@ -1,0 +1,22 @@
+{
+  "name": "SampleCalendar",
+  "version": "0.0.0",
+  "authors": [
+    "tudor3084 <tudor.vintilescu@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "jquery": "~2.1.1",
+    "moment": "~2.8.1",
+    "underscore": "~1.6.0",
+    "bootstrap": "~3.2.0",
+    "handlebars": "~1.3.0"
+  }
+}
