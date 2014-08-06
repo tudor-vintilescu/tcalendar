@@ -62,8 +62,8 @@ table.tcalendar td {
 }
 
 table.tcalendar td.selected a {
-    background-color: lightblue;
-    color: #202020;
+    background-color: #00aefb;
+    color: white;
 }
 
 table.tcalendar td a {
