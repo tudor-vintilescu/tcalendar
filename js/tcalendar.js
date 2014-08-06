@@ -159,6 +159,11 @@
     function resetCalendar() {
         targetElement.children('div.tcalendar').remove();
         renderCalendar(formatCalendarMonth(generateCalendarMonth()));
+
+        if (pendingInterval){
+            markIntervalOnCalendar(pendingInterval.from, pendingInterval.to);
+        }
+
     }
 
     function switchToPreviousMonth () {
@@ -237,8 +242,6 @@
             var dt = parseInt($(event.target).text());
             var mth = parseInt($(event.target).parents('td').data('month'));
             var year = parseInt($(event.target).parents('td').data('year'));
-
-            console.log('dt: ', dt, ', mth: ', mth, ' year: ', year);
 
             var thisMoment = moment([year, mth, dt]);
 
