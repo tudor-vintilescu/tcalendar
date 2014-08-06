@@ -37,7 +37,9 @@
                 {{#each weeks}}\
                 <tr>\
                     {{#each week}}\
-                    <td class="{{date}}"><a {{#unless inMonth}}class="not-in-month"{{/unless}} href="#">{{date}}</a></td>\
+                    <td class="y-{{dYear}} m-{{dMonth}} d-{{date}}" data-year="{{dYear}}" data-month="{{dMonth}}">\
+                        <a {{#unless inMonth}}class="not-in-month"{{/unless}} href="#">{{date}}</a>\
+                    </td>\
                     {{/each}}\
                 </tr>\
                 {{/each}}\
@@ -115,6 +117,8 @@
         var days = _.map(calendarMonth.calendarMonth, function(dt){
             return  {
                 date : dt.momentDate.date(),
+                dMonth : dt.momentDate.month(),
+                dYear : dt.momentDate.year(),
                 inMonth : dt.inMonth,
                 moment : dt.momentDate
             }
@@ -182,6 +186,23 @@
         resetCalendar();
     }
 
+    function markDayOnCalendar(mmt) {
+        targetElement.find('table.tcalendar td.y-' + mmt.year() + '.m-' + mmt.month() + '.d-' + mmt.date())
+            .addClass('selected');
+    }
+
+    function markIntervalOnCalendar(mmt1, mmt2) {
+
+        var currentDate = moment(mmt1);
+        var finalDate = moment(mmt2).add(1, 'day');
+
+        while (currentDate.isBefore(finalDate)){
+            markDayOnCalendar(currentDate);
+            currentDate.add(1, 'day');
+        }
+
+    }
+
     function resetPreviousInterval() {
 
         targetElement.find('table.tcalendar td').removeClass('selected');
@@ -213,26 +234,36 @@
 
         $(this).on('click', 'table.tcalendar td a', function(event) {
 
-            var dt = $(event.target).text();
+            var dt = parseInt($(event.target).text());
+            var mth = parseInt($(event.target).parents('td').data('month'));
+            var year = parseInt($(event.target).parents('td').data('year'));
+
+            console.log('dt: ', dt, ', mth: ', mth, ' year: ', year);
+
+            var thisMoment = moment([year, mth, dt]);
 
             if (!pendingClickedMoment) {
 
                 resetPreviousInterval();
-                console.log('setting pending clicked moment');
-                pendingClickedMoment = dt;
+                console.log('setting pending clicked moment: ', thisMoment.toString());
+                pendingClickedMoment = moment(thisMoment);
 
             } else {
-                var clickedDates = [parseInt(pendingClickedMoment), parseInt(dt)];
 
-                var from = _.min(clickedDates);
+                var from = undefined;
+                var to = undefined;
 
-                var to = _.max(clickedDates);
-
-                console.log('marking from ' + from + ' to ' + to);
-
-                for (var cc = from; cc <= to; cc++){
-                    $(this).parents('table').find('td.' + cc).addClass('selected');
+                if (pendingClickedMoment.isBefore(thisMoment)) {
+                    from = pendingClickedMoment;
+                    to = thisMoment;
+                } else {
+                    from = thisMoment;
+                    to = pendingClickedMoment;
                 }
+
+                console.log('marking from ' + from.toString() + ' to ' + to.toString());
+
+                markIntervalOnCalendar(from, to);
 
                 pendingInterval = {
                     from : from,
